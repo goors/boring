@@ -3,12 +3,13 @@ parameters:
     database_driver: pdo_mysql
     database_host: 127.0.0.1
     database_port: null
-    database_name: symfony
-    database_user: root
-    database_password: null
+    database_name: boring
+    database_user: boring
+    database_password: boring
     mailer_transport: smtp
     mailer_host: 127.0.0.1
     mailer_user: null
     mailer_password: null
     locale: en
-    secret: ThisTokenIsNotSoSecretChangeIt
+    secret: 9de7fd563fd8af2af4744d110f9547e610320d68
+    database_path: null
