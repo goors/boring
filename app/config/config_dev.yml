@@ -29,3 +29,10 @@ assetic:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+swiftmailer:
+    transport:  smtp
+    
+    auth_mode:  plain
+    host:       mail.pregmatch.org
+    username:   nikola@pregmatch.org
+    password:   sanja11

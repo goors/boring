@@ -1,0 +1,21 @@
+acme_index:
+    resource: "@AcmeIndexBundle/Resources/config/routing.yml"
+    prefix:   /
+
+acme_account:
+    resource: "@AcmeAccountBundle/Resources/config/routing.yml"
+    prefix:   /
+
+login:
+    pattern: /login
+    defaults: { _controller: AcmeAccountBundle:Account:login }
+ 
+login_check:
+    pattern: /login_check
+ 
+logout:
+    pattern: /logout
+    
+account_home:
+   pattern:  /home
+   defaults: { _controller: AcmeAccountBundle:Account:index }

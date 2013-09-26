@@ -133,6 +133,64 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
+        if (0 === strpos($pathinfo, '/register')) {
+            // account_register
+            if ($pathinfo === '/register') {
+                return array (  '_controller' => 'Acme\\AccountBundle\\Controller\\AccountController::registerAction',  '_route' => 'account_register',);
+            }
+
+            // account_create
+            if ($pathinfo === '/register/create') {
+                return array (  '_controller' => 'Acme\\AccountBundle\\Controller\\AccountController::createAction',  '_route' => 'account_create',);
+            }
+
+        }
+
+        // account_activate
+        if (0 === strpos($pathinfo, '/activation/email') && preg_match('#^/activation/email/(?P<email>[^/]++)/code/(?P<code>[^/]++)$#s', $pathinfo, $matches)) {
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'account_activate')), array (  '_controller' => 'Acme\\AccountBundle\\Controller\\AccountController::activateAction',));
+        }
+
+        // send_gift
+        if ($pathinfo === '/sendgift') {
+            return array (  '_controller' => 'Acme\\AccountBundle\\Controller\\GiftController::sendgiftAction',  '_route' => 'send_gift',);
+        }
+
+        if (0 === strpos($pathinfo, '/log')) {
+            if (0 === strpos($pathinfo, '/login')) {
+                // login
+                if ($pathinfo === '/login') {
+                    return array (  '_controller' => 'Acme\\AccountBundle\\Controller\\AccountController::loginAction',  '_route' => 'login',);
+                }
+
+                // login_check
+                if ($pathinfo === '/login_check') {
+                    return array('_route' => 'login_check');
+                }
+
+            }
+
+            // logout
+            if ($pathinfo === '/logout') {
+                return array('_route' => 'logout');
+            }
+
+        }
+
+        // account_home
+        if ($pathinfo === '/home') {
+            return array (  '_controller' => 'Acme\\AccountBundle\\Controller\\AccountController::indexAction',  '_route' => 'account_home',);
+        }
+
+        // acme_index_homepage
+        if (rtrim($pathinfo, '/') === '') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'acme_index_homepage');
+            }
+
+            return array (  '_controller' => 'Acme\\IndexBundle\\Controller\\DefaultController::indexAction',  '_route' => 'acme_index_homepage',);
+        }
+
         // _welcome
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {
