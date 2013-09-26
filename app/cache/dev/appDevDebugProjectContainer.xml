@@ -1553,7 +1553,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5243198b3ef6e</argument>
+            <argument>5244485b422bf</argument>
           </service>
         </argument>
       </argument>
@@ -1641,7 +1641,7 @@
     <service id="security.user.provider.concrete.user_db" class="Symfony\Bridge\Doctrine\Security\User\EntityUserProvider" public="false">
       <argument type="service" id="doctrine"/>
       <argument>Acme\AccountBundle\Entity\User</argument>
-      <argument>email</argument>
+      <argument>username</argument>
       <argument>null</argument>
     </service>
     <service id="security.firewall.map.context.main" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext">
@@ -1654,7 +1654,7 @@
                 <call method="add">
                   <argument type="service">
                     <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
-                      <argument>/login</argument>
+                      <argument>^/login</argument>
                     </service>
                   </argument>
                   <argument type="collection">
@@ -1665,7 +1665,7 @@
                 <call method="add">
                   <argument type="service">
                     <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
-                      <argument>/home</argument>
+                      <argument>^/home</argument>
                     </service>
                   </argument>
                   <argument type="collection">
@@ -1893,7 +1893,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>5243198b3ef6e</argument>
+            <argument>5244485b422bf</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>
@@ -1907,7 +1907,7 @@
                 <call method="add">
                   <argument type="service">
                     <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
-                      <argument>/login</argument>
+                      <argument>^/login</argument>
                     </service>
                   </argument>
                   <argument type="collection">
@@ -1918,7 +1918,7 @@
                 <call method="add">
                   <argument type="service">
                     <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
-                      <argument>/home</argument>
+                      <argument>^/home</argument>
                     </service>
                   </argument>
                   <argument type="collection">

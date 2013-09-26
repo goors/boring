@@ -1,0 +1,21 @@
+{% extends "TwigBundle::layout.html.twig" %}
+
+{% block head %}
+    <link rel="icon" sizes="16x16" href="{{ asset('favicon.png') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/indexdemo/css/demo.css') }}" />
+{% endblock %}
+
+{% block title 'Gift App' %}
+
+{% block body %}
+    
+    <!--<div class="block">
+        {% block content %}{% endblock %}
+    </div>-->
+
+    <div class="holder" style="text-align: center; font-size: 14px; margin-bottom: 40px;">
+        In order to proceed please login.
+    </div>
+    
+{% endblock %}
+
