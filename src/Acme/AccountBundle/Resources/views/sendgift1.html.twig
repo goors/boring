@@ -1,0 +1,81 @@
+{% extends "TwigBundle::layout.html.twig" %}
+
+
+{% block head %}
+    <link rel="icon" sizes="16x16" href="{{ asset('favicon.png') }}" />
+    {% block javascripts %} 
+    {{ parent() }}
+     <script src="{{ asset('bundles/system/js/angular.js') }}" type="text/javascript"></script> 
+     <script src="{{ asset('bundles/system/js/angular-strap.min.js') }}" type="text/javascript"></script> 
+     <script src="http://code.angularjs.org/1.2.0-rc.2/angular-animate.min.js"></script>
+     <script>
+     
+        var myApp = angular.module('myApp', []);
+
+    function MyCtrl($scope) {
+
+        $scope.items = ['one', 'two'];
+        $scope.selected = $scope.items[0];
+
+        $scope.select= function(item) {
+           $scope.selected = item; 
+        };
+
+        $scope.itemClass = function(item) {
+            return item === $scope.selected ? 'active' : undefined;
+        };
+    }
+     </script>
+  {% endblock %} 
+{% endblock %}
+
+
+
+{% block title 'Register' %}
+
+{% block body %}
+    
+
+    <div class="sf-reset holder">
+           
+            <div style="width: 802px; margin-bottom: 40px;">
+
+                <center>
+                    <h2>Add new gift</h2>
+
+                </center>
+                <ul class="slider_titles" >
+                        <li class="active" ng-click="page='send'" ng-class="itemClass(item)" id="send">1. Send gift to..</li>
+                        <li ng-click="page='choose'" ng-class="itemClass(item)" id="choose">2. Choose perfect gift.. (unicorn, maybe?) </li>
+                        <li ng-click="page='save'" ng-class="itemClass(item)" id="save">3. Something to say?</li>
+                    </ul>
+
+            </div>
+            <div ng-switch on="page"> 
+                <div style="width: 802px;" class="all_users_circle" ng-switch-when="send">
+                    {% for user in users %} 
+                        <div class="circle">{{user.firstname}}</div>
+                    {% endfor %}
+
+
+                    <div style="clear: both;"></div>
+                </div>
+                <div style="width: 802px;" class="all_gifts_circle" ng-switch-when="choose">
+                    {% for gift in gifts %} 
+                        <div class="circle">{{gift.name}}</div>
+                    {% endfor %}
+
+
+                    <div style="clear: both;"></div>
+                </div>
+                <div style="width: 802px;" class="all_gifts_circle" ng-switch-when="save">
+                    <center>
+                    <textarea class="block" placeholder="Enter your message" style="background-color: #ddd !important; width: 300px !important; " rows="15" ></textarea>
+                    <br />
+                    <input type="submit" value="Send" class="block input_block button" style="min-width: 200px !important" />
+                    </center>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+    </div>
+{% endblock %}
