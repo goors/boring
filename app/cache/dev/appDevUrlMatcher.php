@@ -151,9 +151,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return $this->mergeDefaults(array_replace($matches, array('_route' => 'account_activate')), array (  '_controller' => 'Acme\\AccountBundle\\Controller\\AccountController::activateAction',));
         }
 
-        // send_gift
-        if ($pathinfo === '/sendgift') {
-            return array (  '_controller' => 'Acme\\AccountBundle\\Controller\\GiftController::sendgiftAction',  '_route' => 'send_gift',);
+        if (0 === strpos($pathinfo, '/s')) {
+            // send_gift
+            if ($pathinfo === '/sendgift') {
+                return array (  '_controller' => 'Acme\\AccountBundle\\Controller\\GiftController::sendgiftAction',  '_route' => 'send_gift',);
+            }
+
+            // user_stats
+            if (0 === strpos($pathinfo, '/stats') && preg_match('#^/stats/(?P<user>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'user_stats')), array (  '_controller' => 'Acme\\AccountBundle\\Controller\\GiftController::userstatsAction',));
+            }
+
         }
 
         if (0 === strpos($pathinfo, '/log')) {

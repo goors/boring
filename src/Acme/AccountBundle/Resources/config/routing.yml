@@ -12,7 +12,9 @@ account_activate:
 send_gift:
    pattern:  /sendgift
    defaults: { _controller: AcmeAccountBundle:Gift:sendgift }
-
+user_stats:
+   pattern:  /stats/{user}
+   defaults: { _controller: AcmeAccountBundle:Gift:userstats }
    
    
    

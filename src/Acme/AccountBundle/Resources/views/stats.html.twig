@@ -1,0 +1,27 @@
+{% extends "TwigBundle::layout.html.twig" %}
+
+
+
+{% block title 'Latest gifts' %}
+
+{% block body %}
+    
+
+    <div class="sf-reset holder">
+        <div style="width: 802px; margin-bottom: 40px;">
+
+            
+        </div>
+        <div style="width: 802px;" class="latest_gifts" >
+
+            <div class="personal_data" style="font-size:14px;">
+                <h1>{{ user.firstname }} {{ user.lastname }}</h1>
+                <br />Total gifts: <b>{{totalgifts}}</b><br />
+                Most popular in: <b>{{totalgifts}}</b><br />
+                Best gifts <b>{{bestgift}} - {{best_gifts_total}} times</b>
+            </div>
+            
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+{% endblock %}
