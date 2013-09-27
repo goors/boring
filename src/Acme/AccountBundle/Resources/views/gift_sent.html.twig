@@ -1,0 +1,22 @@
+{% extends "TwigBundle::layout.html.twig" %}
+
+{% block title 'Message' %}
+
+{% block body %}
+    
+
+    <div class="sf-reset holder">
+        <div style="width: 802px; margin-bottom: 40px; text-align: center;">
+                        {% if message  %}<h2>{{message}}</h2>{% endif %}
+                    
+                </div>
+
+            
+            {% if img  %} 
+     
+                <img src="bundles/system/img/gift_sent.jpg" alt="Thank you" title="Thank you."/>
+            {% endif %}
+        </div>
+    </div>
+    
+{% endblock %}

@@ -1,41 +1,50 @@
 {% extends "TwigBundle::layout.html.twig" %}
 
 
-{% block head %}
-    <link rel="icon" sizes="16x16" href="{{ asset('favicon.png') }}" />
-    {% block javascripts %} 
-    {{ parent() }}
-     <script src="{{ asset('bundles/system/js/angular.js') }}" type="text/javascript"></script> 
-     <script src="{{ asset('bundles/system/js/angular-strap.min.js') }}" type="text/javascript"></script> 
-     
-  {% endblock %} 
-{% endblock %}
 
-
-
-{% block title 'Register' %}
+{% block title 'Latest gifts' %}
 
 {% block body %}
     
-
+<script>
+function Sortgifts($scope){
+               
+             
+            {% if gifts %}   
+            $scope.gifts =[{% for gift in gifts %}{name:'{{gift.gift.name}}', user:'{{gift.receivedby.firstname}}', date:'{{gift.sentdate|date("d/m/Y g:ia")}}'},{% endfor %}]
+            {% endif %}
+            }
+    </script>
     <div class="sf-reset holder">
         <div style="width: 802px; margin-bottom: 40px;">
 
             <center>
                 <h2>Latest gifts</h2>
                 <br>
-                <a class="block sort" href="#">By Date</a>
-                <a class="block sort" href="#">By Person</a>
+                <a class="block sort " href="javcript: void(0)" ng-click="predicate = 'date'; reverse=false">By Date</a>
+                <a class="block sort" href="javcript: void(0)" ng-click="predicate = 'user'; reverse=false">By Person</a>
             </center>
             
             
             
         </div>
-        <div style="width: 802px;" class="latest_gifts">
+        <div style="width: 802px;" class="latest_gifts" ng-controller="Sortgifts">
 
-            {% for i in 0..11 %}
-            <div class="circle">Hello</div>
-            {% endfor %}
+            {% verbatim %}
+            <div class="circle" ng-repeat="gift in gifts | orderBy:predicate:reverse">
+                <span style="font-size: 11px; ">
+                    <u>{{gift.name}}</u> for 
+                    <br/> <br/> 
+                    <a href="/stats/{{gift.user}}" style="color: white;">
+                        {{gift.user}}
+                    </a> 
+                    <font style="color: #ddd;">on
+                        <br />
+                        {{gift.date}} 
+                    </font>
+                </span>
+            </div>
+            {% endverbatim %}
             
             <div style="clear: both;"></div>
         </div>

@@ -37,7 +37,6 @@
     <parameter key="mailer_password">null</parameter>
     <parameter key="locale">en</parameter>
     <parameter key="secret">9de7fd563fd8af2af4744d110f9547e610320d68</parameter>
-    <parameter key="database_path">null</parameter>
     <parameter key="controller_resolver.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver</parameter>
     <parameter key="controller_name_converter.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser</parameter>
     <parameter key="response_listener.class">Symfony\Component\HttpKernel\EventListener\ResponseListener</parameter>
@@ -1553,7 +1552,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5244485b422bf</argument>
+            <argument>5245c2870834e</argument>
           </service>
         </argument>
       </argument>
@@ -1893,7 +1892,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>5244485b422bf</argument>
+            <argument>5245c2870834e</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>
@@ -1951,7 +1950,6 @@
               </service>
             </argument>
             <argument type="service" id="security.authentication.manager"/>
-            <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>
       </argument>
@@ -2392,6 +2390,22 @@
             <argument type="service">
               <service class="Doctrine\ORM\Mapping\DefaultNamingStrategy" public="false"/>
             </argument>
+          </call>
+          <call method="addCustomNumericFunction">
+            <argument>rand</argument>
+            <argument>Mapado\MysqlDoctrineFunctions\DQL\MysqlRand</argument>
+          </call>
+          <call method="addCustomNumericFunction">
+            <argument>round</argument>
+            <argument>Mapado\MysqlDoctrineFunctions\DQL\MysqlRound</argument>
+          </call>
+          <call method="addCustomDatetimeFunction">
+            <argument>date</argument>
+            <argument>Mapado\MysqlDoctrineFunctions\DQL\MysqlDate</argument>
+          </call>
+          <call method="addCustomDatetimeFunction">
+            <argument>date_format</argument>
+            <argument>Acme\AccountBundle\DQL\MysqlDateFormat</argument>
           </call>
         </service>
       </argument>

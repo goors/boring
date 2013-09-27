@@ -20,16 +20,35 @@ class AccountController extends Controller
         //var_dump($this->getUser()->getEmail()); 
         
         //if( $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
-            return $this->render(
-            'AcmeAccountBundle::home.html.twig',
-                array('user' => $this->getUser(), 'message'=>false)
-            );
+            //return $this->render(
+            //'AcmeAccountBundle::home.html.twig',
+              //  array('user' => $this->getUser(), 'message'=>false)
+            //);
         //}       
         //else{
           //  return $this->redirect("/");
         //}
             
-         
+         /*
+         * get last 12 gifts and sent to view
+         */
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT p
+            FROM AcmeAccountBundle:UserGift p
+            ORDER BY p.sent_date ASC'
+        );
+
+        $gifts = $query->getResult();
+        
+        
+        return $this->render(
+            'AcmeAccountBundle::home.html.twig',
+                array(
+                       'user' => $this->getUser(), 
+                       'message'=>false, 
+                       'gifts'=>$gifts)
+            );
             
     }
 
