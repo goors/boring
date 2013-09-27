@@ -56,7 +56,13 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
-    
+        dql:
+                numeric_functions:
+                    rand: Mapado\MysqlDoctrineFunctions\DQL\MysqlRand
+                    round: Mapado\MysqlDoctrineFunctions\DQL\MysqlRound
+                datetime_functions:
+                    date: Mapado\MysqlDoctrineFunctions\DQL\MysqlDate
+                    date_format: Acme\AccountBundle\DQL\MysqlDateFormat
 
 # Swiftmailer Configuration
 swiftmailer:

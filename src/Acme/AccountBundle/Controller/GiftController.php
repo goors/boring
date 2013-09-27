@@ -11,7 +11,7 @@ use Acme\AccountBundle\Form\Type\LoginType;
 use Acme\AccountBundle\Form\Model\Login;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
-
+use Mapado\MysqlDoctrineFunctions\MysqlDateFormat;
 class GiftController extends Controller {
     
     
@@ -140,25 +140,37 @@ class GiftController extends Controller {
         
         $query = $em->createQuery(
                 
-            "SELECT COUNT( * ) AS counta, DATE_FORMAT( p.sent_date,  \"%Y-%m\" ) AS _month
-            FROM sent_gifts p
-            WHERE p.received_by =9
+            "SELECT COUNT( p.id ) AS counta, DATE_FORMAT( p.sent_date,  '%Y-%m' ) AS _month
+            FROM AcmeAccountBundle:UserGift p
+            WHERE p.received_by = '".$user->getId()."'
             GROUP BY _month
             ORDER BY _month
-            LIMIT 0 , 30   "
+               "
                 
                 
                 
             
         );
-
+        
         $mostpopular = $query->getResult();
         
+        /*
+         * get all user gifts
+         */
         
+        
+        $all_user_gifts = $em->getRepository("Acme\AccountBundle\Entity\UserGift")->findBy(array("received_by"=>$user));
         
         return $this->render(
             'AcmeAccountBundle::stats.html.twig',
-                array("user"=>$user, "totalgifts"=>$totalgifts[1], "bestgift"=>$bestgift->getName(),"best_gifts_total"=>$time)
+                array(
+                        "user"=>$user, 
+                        "totalgifts"=>$totalgifts[1], 
+                        "bestgift"=>$bestgift->getName(),
+                        "best_gifts_total"=>$time, 
+                        "mostpopular"=>$mostpopular[0]['_month'],
+                        "all_user_gifts"=>$all_user_gifts
+                    )
             );
     }
     

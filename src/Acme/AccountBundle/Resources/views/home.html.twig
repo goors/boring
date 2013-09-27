@@ -34,7 +34,7 @@ function Sortgifts($scope){
             <div class="circle" ng-repeat="gift in gifts | orderBy:predicate:reverse">
                 <span style="font-size: 11px; ">
                     <u>{{gift.name}}</u> for 
-                    <br/> 
+                    <br/> <br/> 
                     <a href="/stats/{{gift.user}}" style="color: white;">
                         {{gift.user}}
                     </a> 

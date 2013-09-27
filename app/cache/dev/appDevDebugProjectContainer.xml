@@ -1552,7 +1552,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5245b3980ce9f</argument>
+            <argument>5245c2870834e</argument>
           </service>
         </argument>
       </argument>
@@ -1892,7 +1892,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>5245b3980ce9f</argument>
+            <argument>5245c2870834e</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>
@@ -1950,7 +1950,6 @@
               </service>
             </argument>
             <argument type="service" id="security.authentication.manager"/>
-            <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>
       </argument>
@@ -2391,6 +2390,22 @@
             <argument type="service">
               <service class="Doctrine\ORM\Mapping\DefaultNamingStrategy" public="false"/>
             </argument>
+          </call>
+          <call method="addCustomNumericFunction">
+            <argument>rand</argument>
+            <argument>Mapado\MysqlDoctrineFunctions\DQL\MysqlRand</argument>
+          </call>
+          <call method="addCustomNumericFunction">
+            <argument>round</argument>
+            <argument>Mapado\MysqlDoctrineFunctions\DQL\MysqlRound</argument>
+          </call>
+          <call method="addCustomDatetimeFunction">
+            <argument>date</argument>
+            <argument>Mapado\MysqlDoctrineFunctions\DQL\MysqlDate</argument>
+          </call>
+          <call method="addCustomDatetimeFunction">
+            <argument>date_format</argument>
+            <argument>Acme\AccountBundle\DQL\MysqlDateFormat</argument>
           </call>
         </service>
       </argument>
