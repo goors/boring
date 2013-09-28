@@ -23,14 +23,21 @@
         <div id="content">
             <div class="header">
                 <div class="holder">
-                    <div class="logo">
+                    <div class="logo" style="width: 300px;">
                         {% if app.user %}
                             <div class="circle">    
                             <a href="/home">Home</a>  
                             </div>
                             <div class="circle">    
-                            <a href="/sendgift">Send gift</a>  
+                                <a href="/sendgift">Send gift</a>  
                             </div>
+                            <font style="font-size: 11px;">
+                            {% if new_count %}
+                                <a style="font-size: 11px;" href="/stats/{{app.user.firstname}}">New messages (<font style="color: #fff; background-color: red;" id="msg_num">{{ new_count }}</font>)</a>
+                            {% else %}
+                                No new gifts
+                            {% endif %}
+                            </font>   <br> 
                         {% endif %}
                         <span onclick="javascript: window.location.href = '/';" style="cursor: pointer;">Gift app</span>
                         

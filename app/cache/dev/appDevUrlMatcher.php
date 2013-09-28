@@ -164,6 +164,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
+        // mark_read
+        if (0 === strpos($pathinfo, '/markasread') && preg_match('#^/markasread/(?P<giftid>[^/]++)$#s', $pathinfo, $matches)) {
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'mark_read')), array (  '_controller' => 'Acme\\AccountBundle\\Controller\\GiftController::markasreadAction',));
+        }
+
         if (0 === strpos($pathinfo, '/log')) {
             if (0 === strpos($pathinfo, '/login')) {
                 // login

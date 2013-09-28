@@ -12,6 +12,9 @@ use Acme\AccountBundle\Form\Model\Login;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Mapado\MysqlDoctrineFunctions\MysqlDateFormat;
+
+use Symfony\Component\HttpFoundation\Response;
+
 class GiftController extends Controller {
     
     
@@ -19,7 +22,17 @@ class GiftController extends Controller {
     public function sendGiftAction(Request $request){
         
         
-        
+        /*
+         * get new gifts
+         */
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            "SELECT COUNT(p.id)
+            FROM AcmeAccountBundle:UserGift p WHERE p.new='1' AND p.received_by='".$this->getUser()->getId()."'
+            "
+        );
+
+        $new_count = $query->getSingleScalarResult();
         
         
         
@@ -66,7 +79,7 @@ class GiftController extends Controller {
             $send_gift->setSentBy($sent_by);
             $send_gift->setReceivedBy($received_by);
             $send_gift->addUser($received_by);
-            
+            $send_gift->setNew(1);
             $em->persist($send_gift);
             $em->flush();
             
@@ -85,15 +98,16 @@ class GiftController extends Controller {
             $this->get('mailer')->send($message);
             return $this->render(
             'AcmeAccountBundle::gift_sent.html.twig',
-                array('img' => true, 'message'=>'New gift is on the way.')
+                array('img' => true, 'message'=>'New gift is on the way.',"new_count"=>$new_count)
             );
             
         }
         
         
+        
         return $this->render(
             'AcmeAccountBundle::sendgift.html.twig',
-                array('users' => $users, 'gifts'=>$gifts)
+                array('users' => $users, 'gifts'=>$gifts,"new_count"=>$new_count)
             );
     }
     
@@ -173,6 +187,20 @@ class GiftController extends Controller {
         
         $all_user_gifts = $em->getRepository("Acme\AccountBundle\Entity\UserGift")->findBy(array("received_by"=>$user));
         
+        
+        /*
+         * get new gifts
+         */
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            "SELECT COUNT(p.id)
+            FROM AcmeAccountBundle:UserGift p WHERE p.new='1' AND p.received_by='".$this->getUser()->getId()."'
+            "
+        );
+
+        $new_count = $query->getSingleScalarResult();
+        
+        
         return $this->render(
             'AcmeAccountBundle::stats.html.twig',
                 array(
@@ -181,11 +209,29 @@ class GiftController extends Controller {
                         "bestgift"=>$bestgift->getName(),
                         "best_gifts_total"=>$time, 
                         "mostpopular"=>$mostpopular[0]['_month'],
-                        "all_user_gifts"=>$all_user_gifts
+                        "all_user_gifts"=>$all_user_gifts,
+                        "new_count"=>$new_count
                     )
             );
     }
     
+    public function markAsReadAction(Request $request){
+        
+        $em = $this->getDoctrine()->getManager();
+        $gift = $em->getRepository("Acme\AccountBundle\Entity\UserGift")->find($request->get('giftid'));
+        $gift->setNew(0);
+        
+        
+        $em->persist($gift);
+        $em->flush();
+        
+        $data = array("result"=>1);
+        
+        $response = new \Symfony\Component\HttpFoundation\Response(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+        
+    }
 }
 
 ?>

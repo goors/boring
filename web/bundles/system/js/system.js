@@ -107,3 +107,19 @@ angular.module('boring',[]);
                    window.location.href = "/sendgift"
                }
            }
+           function Markasread($scope,  $http){
+               $scope.updateModel = function(url, id) {
+                $http.get(url);
+                document.getElementById("span_"+id).remove();
+                
+                
+                var num = document.getElementById("msg_num").innerText;
+                
+                var new_num = parseInt(num) - parseInt(1);
+                
+                document.getElementById("msg_num").innerText = new_num;
+              };
+           }
+           
+
+           

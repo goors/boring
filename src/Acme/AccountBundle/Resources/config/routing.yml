@@ -15,6 +15,9 @@ send_gift:
 user_stats:
    pattern:  /stats/{user}
    defaults: { _controller: AcmeAccountBundle:Gift:userstats }
+mark_read:
+   pattern:  /markasread/{giftid}
+   defaults: { _controller: AcmeAccountBundle:Gift:markasread }
    
    
    

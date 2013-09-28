@@ -42,12 +42,26 @@ class AccountController extends Controller
         $gifts = $query->getResult();
         
         
+        /*
+         * get new gifts
+         */
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            "SELECT COUNT(p.id)
+            FROM AcmeAccountBundle:UserGift p WHERE p.new='1' AND p.received_by='".$this->getUser()->getId()."'
+            "
+        );
+
+        $new_count = $query->getSingleScalarResult();
+        
         return $this->render(
             'AcmeAccountBundle::home.html.twig',
                 array(
                        'user' => $this->getUser(), 
                        'message'=>false, 
-                       'gifts'=>$gifts)
+                       'gifts'=>$gifts,
+                       'new_count'=>$new_count 
+                     )
             );
             
     }
