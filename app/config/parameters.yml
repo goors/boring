@@ -12,3 +12,7 @@ parameters:
     mailer_password: null
     locale: en
     secret: 9de7fd563fd8af2af4744d110f9547e610320d68
+    
+    facebook.credentials.app_id: 1410016909226918 
+    facebook.credentials.app_secret: 5b013ad6500e256b1d60ac0a7f1eca51
+    

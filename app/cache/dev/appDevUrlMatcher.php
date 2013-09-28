@@ -190,6 +190,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'Acme\\AccountBundle\\Controller\\AccountController::indexAction',  '_route' => 'account_home',);
         }
 
+        // facebook_login
+        if ($pathinfo === '/facebook-login') {
+            return array (  '_controller' => 'Acme\\AccountBundle\\Controller\\AccountController::facebookloginAction',  '_route' => 'facebook_login',);
+        }
+
         // acme_index_homepage
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {
