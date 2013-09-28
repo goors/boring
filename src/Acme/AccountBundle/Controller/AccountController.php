@@ -106,7 +106,7 @@ class AccountController extends Controller
    
         return $this->render(
             'AcmeAccountBundle::message.html.twig',
-            array("message"=>"Please check your email for activation email.")
+            array("message"=>"Please check your email for activation email.","img"=>"")
         );
     }
     
@@ -116,7 +116,7 @@ class AccountController extends Controller
         $user = $em->getRepository("Acme\AccountBundle\Entity\User")->findOneBy(array("username"=>$request->get("email"), "acc"=>$request->get("code")));
         $role = $em->getRepository("Acme\AccountBundle\Entity\Role")->findOneBy(array("role"=>"ROLE_USER"));
         
-        if(count($user->getusername()) && $user->getIsActive() == 0){
+        if(count($user->getUsername()) && $user->getIsActive() == 0){
             $user->setIsActive(1);
             $user->addRole($role);
             $em->persist($user);
@@ -128,13 +128,13 @@ class AccountController extends Controller
             
             return $this->render(
                 'AcmeAccountBundle::message.html.twig',
-                array("message"=>"Your account is activated. You can no login with your email.","loggedin"=>false)
+                array("message"=>"Your account is activated. You can no login with your email.","loggedin"=>false,"img"=>"")
             );
         }
         else{
             return $this->render(
             'AcmeAccountBundle::message.html.twig',
-            array("message"=>"Wrong email or activation code.","loggedin"=>false)
+            array("message"=>"Wrong email or activation code.","loggedin"=>false,"img"=>"")
         );
         }
     }

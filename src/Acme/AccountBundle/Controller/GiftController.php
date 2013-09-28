@@ -60,7 +60,7 @@ class GiftController extends Controller {
             $received_by = $em->getRepository("Acme\AccountBundle\Entity\User")->find($user_id);
             
             $send_gift = new \Acme\AccountBundle\Entity\UserGift;
-            $send_gift->setDate(new \DateTime(date("Y-m-d H:i:s")));
+            $send_gift->setSentDate(new \DateTime(date("Y-m-d H:i:s")));
             $send_gift->setComment($comment);
             $send_gift->setGift($gift);
             $send_gift->setSentBy($sent_by);
