@@ -71,6 +71,18 @@ class GiftController extends Controller {
             $em->flush();
             
             
+            
+            
+            $message = \Swift_Message::newInstance()
+            ->setSubject('new Gift on Giftapp')
+            ->setFrom('gift@pregmatch.org')
+            ->setTo($received_by->getusername())
+            ->setBody(
+                
+                "Hello, ".$received_by->getFirstName().". <br /><br />
+                    You got ".$gift->getName()."from ".$sent_by->getFirstName(), 'text/html'    
+            );
+            $this->get('mailer')->send($message);
             return $this->render(
             'AcmeAccountBundle::gift_sent.html.twig',
                 array('img' => true, 'message'=>'New gift is on the way.')
