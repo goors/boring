@@ -13,31 +13,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Facebook;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 
-
-
-
-
+//use Symfony\Component\Security\Core\A
 
 class AccountController extends Controller
 {
     
     public function indexAction(Request $request){
         
-        //var_dump($this->getUser()->getEmail()); 
-        
         if( !$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
             return $this->redirect("/");
         }
-            //return $this->render(
-            //'AcmeAccountBundle::home.html.twig',
-              //  array('user' => $this->getUser(), 'message'=>false)
-            //);
-        //}       
-        //else{
-          //  return $this->redirect("/");
-        //}
+            
             
          /*
          * get last 12 gifts and sent to view
@@ -174,88 +164,6 @@ class AccountController extends Controller
         ));
         
         
-        /*$login = new Login();
-        
-        $form = $this->createForm(new LoginType(), $login, array(
-            'action' => $this->generateUrl('login'),
-        ));*/
-            
-        //$factory = $this->get('security.encoder_factory');
-        //var_dump($factory);
-        //$user = new User;
-        //$encoder = $factory->getEncoder($user);
-        //$password = $encoder->encodePassword('12345678', 'sanja11');
-        //$user->setPassword($password);
-               // echo $password;
-        
-        //$session = $request->getSession();
-        //var_dump($request->getMethod())
-        /* if($request->isMethod("POST")){
-            var_dump($request->getMethod());
-            //echo $password;
-            $request = $this->getRequest();
-        $session = $request->getSession();
- 
-        // get the login error if there is one
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
-        } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-        }
- 
-        //var_dump($error);
-        return $this->render(
-                'AcmeAccountBundle::login.html.twig',
-                array('error'=>$error, "last_username"=>$session->get(SecurityContext::LAST_USERNAME))
-            );
-            
-            /*$data = $request->request->all();
-            
-            $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository("Acme\AccountBundle\Entity\User")->findOneBy(
-                    array(
-                        "email"=>$data['login']['user']['email'], 
-                        "password"=>md5($data['login']['user']['password']),
-                        "status"=>1
-                        )
-                    );
-            
-            if(count($user)){
-                if($user->getEmail() && $user->getStatus() == 1){
-                    
-                    $session->clear();
-                    
-                    $session->set("login", $user);
-                    
-                    return $this->redirect("/home");
-                    
-                }
-                else {
-                    return $this->render(
-                        'AcmeAccountBundle::login.html.twig',
-                        array('form' => $form->createView(), 'message'=>"Account not activated.","loggedin"=>false)
-                    );
-                }
-                
-            }
-            else{
-                
-                return $this->render(
-                    'AcmeAccountBundle::login.html.twig',
-                    array('form' => $form->createView(), 'message'=>"Credentials that you entered are wrong.")
-                );
-            }
-            
-            
-        }
-        else{
-            
-            return $this->render(
-                'AcmeAccountBundle::login.html.twig',
-                array('error'=>false)
-            );
-            
-        }*/
     }
     
     public function logoutAction(Request $request){
@@ -269,7 +177,8 @@ class AccountController extends Controller
     public function facebookLoginAction(Request $request){
         
         
-        $session = new Session();
+        $request = $this->getRequest(); 
+        $session = $request->getSession();
         
         $app_id = $this->container->getParameter('facebook.credentials.app_id'); 
         $app_secret = $this->container->getParameter('facebook.credentials.app_secret'); 
@@ -283,24 +192,30 @@ class AccountController extends Controller
             $me = $facebook->api('/me');
             
             
-            var_dump($me);
-            
-                
-                
                 $em = $this->getDoctrine()->getManager();
                 
                 $user = $em->getRepository("Acme\AccountBundle\Entity\User")->findOneBy(array("username"=>$me['email']));
                 
-                
+                $email = $me['email'];
                 if($user){
-                    //die("ima");
                     
-                    $request = $this->getRequest();
-                    $session = $request->getSession();
-                    $session->set("user", $user);
-                    
-                    
+                     $firewall = "main"; 
+                     $roles = $user->getRoles(); 
+                     $rolesArray = array(); 
+                     foreach($roles as $role): 
+                         $rolesArray[] = $role->getRole(); 
+                     endforeach; 
+                     
+                     $token = new UsernamePasswordToken($user, $user->getPassword(), $firewall, $rolesArray); 
+                     $event = new InteractiveLoginEvent($this->getRequest(), $token); 
+                     $this->get("event_dispatcher")->dispatch("security.interactive_login", $event); 
+                     $this->get('security.context')->setToken($token); 
+                     var_dump($roles);
+                     return $this->redirect("/home");
                 }
+                    
+                    
+                
                 else{
                     
                     $_SESSION['reg_email'] = $email;
@@ -312,10 +227,15 @@ class AccountController extends Controller
         else{
             $loginUrl = $facebook->getLoginUrl(array('scope' => 'email,publish_stream,status_update,offline_access'));
             
-            //echo $loginUrl;
-            
             return $this->redirect($loginUrl);
         }
+        
+        
+        
+        
+          
+         
+         
         return $this->render(
                     'AcmeAccountBundle::login.html.twig',
                     array('error'=>"", 'message'=>"", )

@@ -5,15 +5,11 @@
     <link rel="icon" sizes="16x16" href="{{ asset('favicon.png') }}" />
     {% block javascripts %} 
     {{ parent() }}
-     <script src="{{ asset('bundles/system/js/angular.js') }}" type="text/javascript"></script> 
-     <script src="{{ asset('bundles/system/js/angular-strap.min.js') }}" type="text/javascript"></script> 
-     
   {% endblock %} 
 {% endblock %}
 {% block title 'Login' %}
 {% block body %}
-    
-
+   
     <div class="sf-reset holder">
         <div class="block" style="width: 300px; background-color: #ddd; border: none;">
             <form action="{{ path('login_check') }}" method="post">

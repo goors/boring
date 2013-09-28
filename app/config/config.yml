@@ -1,7 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-
+    #- { resource: "@Acme/AccountBundle/Resources/config/security_factories.xml" }
 framework:
     #esi:             ~
     #translator:      { fallback: %locale% }
