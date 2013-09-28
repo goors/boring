@@ -39,6 +39,8 @@
     <parameter key="secret">9de7fd563fd8af2af4744d110f9547e610320d68</parameter>
     <parameter key="facebook.credentials.app_id">1410016909226918</parameter>
     <parameter key="facebook.credentials.app_secret">5b013ad6500e256b1d60ac0a7f1eca51</parameter>
+    <parameter key="facebookappid">1410016909226918</parameter>
+    <parameter key="facebookappsecret">5b013ad6500e256b1d60ac0a7f1eca51</parameter>
     <parameter key="controller_resolver.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver</parameter>
     <parameter key="controller_name_converter.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser</parameter>
     <parameter key="response_listener.class">Symfony\Component\HttpKernel\EventListener\ResponseListener</parameter>
@@ -1554,7 +1556,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>52461e39ba37c</argument>
+            <argument>52471c4897a35</argument>
           </service>
         </argument>
       </argument>
@@ -1894,7 +1896,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>52461e39ba37c</argument>
+            <argument>52471c4897a35</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>

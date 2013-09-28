@@ -13,12 +13,11 @@ class UserType extends AbstractType
         
         
         
-        if($_SESSION['reg_first_name']){
-            $fname = $_SESSION['reg_first_name'];
-        }
-        if($_SESSION['reg_last_name']){
-            $lname = $_SESSION['reg_last_name'];
-        }
+        $email = (isset($_SESSION['reg_email']) ?$_SESSION['reg_email']: "" );
+        $fname = (isset($_SESSION['reg_first_name']) ?$_SESSION['reg_first_name']: "" );
+        $lname = (isset($_SESSION['reg_last_name']) ?$_SESSION['reg_last_name']: "" );
+        
+        
         $builder->add('first_name', 'text', array( 
             'attr'   =>  array(
                 'value'=>$fname,
@@ -39,6 +38,7 @@ class UserType extends AbstractType
         );
         $builder->add('username', 'email', array( 
             'attr'   =>  array(
+                'value'=> $email,
                 'class'   => 'block input_block',
                 'placeholder'=>"Your email"
                 ), 'label' => false,

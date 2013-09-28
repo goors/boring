@@ -7,47 +7,47 @@
     
 
     <div class="sf-reset holder" >
-            <form action="{{ path('send_gift') }}" method="post" name="send_gift" id="send_gift">
-           <div ng-controller="Slider" >
-                <div style="width: 802px; margin-bottom: 40px; text-align: center;">
-                        <h2>Add new gift</h2>
-                    <ul class="slider_titles">
-                        <!--<li id="save" ng-click="selection='save'" ng-class="{'active': item.clicked}">3. Something to say?</li>-->
-                        <li  ng-repeat="item in items"  ng-click="select(item)" ng-class="{active: item == selected}">{% verbatim %}{{item.title}}{% endverbatim %}</li>
-                    </ul>
-                    
-                </div>
-                <div ng-switch on="selection"> 
-                    <div style="width: 802px;" class="all_users_circle"  ng-switch-default >
-                        
-                        {% for user in users %} 
-                            <div class="circle" ng-click="remeber_name({{user.id}})" ng-class="{active: {{user.id}} == name_selected}">
-                                {{user.firstname}}
-                                    
-                            </div>
-                        {% endfor %}
+           <form action="{{ path('send_gift') }}" method="post" name="send_gift" id="send_gift">
+            <div ng-controller="Slider" >
+                 <div class="gift_nav">
+                         <center><h2>Add new gift</h2></center>
+                     <ul class="slider_titles">
+                         <li  ng-repeat="item in items"  ng-click="select(item)" ng-class="{active: item == selected}">{% verbatim %}{{item.title}}{% endverbatim %}</li>
+                     </ul>
+
+                 </div>
+                    <div style="clear: both;"></div>
+                 <div ng-switch on="selection"> 
+                     <div class="all_users_circle"  ng-switch-default >
+
+                         {% for user in users %} 
+                             <div class="circle" ng-click="remeber_name({{user.id}})" ng-class="{active: {{user.id}} == name_selected}">
+                                 {{user.firstname}}
+
+                             </div>
+                         {% endfor %}
 
 
-                        <div style="clear: both;"></div>
-                    </div>
-                    <div style="width: 802px;" class="all_gifts_circle" ng-switch-when="choose" >
-                        {% for gift in gifts %} 
-                            <div class="circle" ng-click="remeber_gift({{gift.id}})" ng-class="{active: {{gift.id}} == gift_name_selected}">{{gift.name}}</div>
-                        {% endfor %}
+                         <div style="clear: both;"></div>
+                     </div>
+                     <div class="all_gifts_circle" ng-switch-when="choose" >
+                         {% for gift in gifts %} 
+                             <div class="circle" ng-click="remeber_gift({{gift.id}})" ng-class="{active: {{gift.id}} == gift_name_selected}">{{gift.name}}</div>
+                         {% endfor %}
 
 
-                        <div style="clear: both;"></div>
-                    </div>
-                    <div style="width: 802px;" class="all_gifts_circle" ng-switch-when="save">
-                        <center>
-                        <textarea name="comment" class="block" placeholder="Enter your message" style="background-color: #ddd !important; width: 300px !important; " rows="15" ></textarea>
-                        <br />
-                        <input type="submit" value="Send" class="block input_block button" style="min-width: 200px !important" />
-                        </center>
-                        <div style="clear: both;"></div>
-                    </div>
-                </div>
-         </div>
-                    </form>
+                         <div style="clear: both;"></div>
+                     </div>
+                     <div class="all_gifts_circle" ng-switch-when="save">
+                         <center>
+                         <textarea name="comment" class="block comment" placeholder="Enter your message" rows="15" ></textarea>
+                         <br />
+                         <input type="submit" value="Send" class="block input_block button send_btn" />
+                         </center>
+                         <div style="clear: both;"></div>
+                     </div>
+                 </div>
+          </div>
+         </form>
     </div>
 {% endblock %}

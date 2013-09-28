@@ -2,12 +2,8 @@
 
 
 {% block head %}
-    <link rel="icon" sizes="16x16" href="{{ asset('favicon.png') }}" />
     {% block javascripts %} 
     {{ parent() }}
-     <script src="{{ asset('bundles/system/js/angular.js') }}" type="text/javascript"></script> 
-     <script src="{{ asset('bundles/system/js/angular-strap.min.js') }}" type="text/javascript"></script> 
-     
   {% endblock %} 
 {% endblock %}
 
@@ -19,12 +15,14 @@
     
 
     <div class="sf-reset holder">
-        <div class="block" style="width: 300px; background-color: #ddd; border: none;">
+        <div class="block register_form" >
 
             {{form(form)}}
+            <br />
+            <a href="/facebook-login">Register with facebook</a>
             {% if message  %} 
      
-                <p style="font-weight: bold; text-align: center; font-size: 11px; margin-top: 10px;">{{message}}</p>
+                <p class="message">{{message}}</p>
             {% endif %}
         </div>
     </div>

@@ -8,25 +8,22 @@
     
 
     <div class="sf-reset holder">
-        <div style="width: 802px; margin-bottom: 40px;">
+        
+        <div >
 
-            
-        </div>
-        <div style="width: 802px;" >
-
-            <div class="personal_data" style="font-size:14px; float: left; width: 400px;" ng-controller="Sendgiftto">
+            <div class="personal_data"ng-controller="Sendgiftto">
                 <h1>{{ user.firstname }} {{ user.lastname }}</h1>
                 <br />Total gifts: <b>{{totalgifts}}</b><br />
                 Most popular in: <b>{{mostpopular|date("F Y")}}.</b><br />
                 Best gifts <b>{{bestgift}} - {{best_gifts_total}} times</b>
                 <br /><br />
-                <a href="javascript: void(0)" ng-click="save({{user.id}})" class="block button  input_block" style="color: white; border: none; padding: 6px !important;">Send new gift</a>
+                <a href="javascript: void(0)" ng-click="save({{user.id}})" class="block button  input_block custom_send" style="">Send new gift</a>
             </div>
-            <div class="gift_data" style="font-size:14px; float: right; width: 400px;">
+            <div class="gift_data">
                 {% for usergift in all_user_gifts %}
-                    <div style="float:left; width: 100%; margin-bottom: 30px; border-bottom: 1px solid #ddd; padding-bottom: 20px;">
+                    <div class="sum">
                         <div class="circle">
-                            <span style="display: block; margin-top: 30px; ">
+                            <span>
                             {{usergift.gift.name}}
                             </span>
                         </div>

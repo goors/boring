@@ -16,3 +16,6 @@ parameters:
     facebook.credentials.app_id: 1410016909226918 
     facebook.credentials.app_secret: 5b013ad6500e256b1d60ac0a7f1eca51
     
+    facebookAppId: 1410016909226918
+    facebookAppSecret: 5b013ad6500e256b1d60ac0a7f1eca51
+    

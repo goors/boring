@@ -1,0 +1,9 @@
+[submodule "path/to/bundles/AW/Bundle/FacebookAuthBundle"]
+	path = path/to/bundles/AW/Bundle/FacebookAuthBundle
+	url = https://bitbucket.org/alienmegacorp/facebook-api-bundle-for-symfony2.git
+[submodule "src/Acme/FacebookAuthBundle"]
+	path = src/Acme/FacebookAuthBundle
+	url = https://bitbucket.org/alienmegacorp/facebook-api-bundle-for-symfony2.git
+[submodule "src/AW/Bundle/FacebookAuthBundle"]
+	path = src/AW/Bundle/FacebookAuthBundle
+	url = https://bitbucket.org/alienmegacorp/facebook-api-bundle-for-symfony2.git

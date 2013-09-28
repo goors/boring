@@ -1,21 +1,10 @@
 {% extends "TwigBundle::layout.html.twig" %}
 
-
-{% block head %}
-    <link rel="icon" sizes="16x16" href="{{ asset('favicon.png') }}" />
-    {% block javascripts %} 
-    {{ parent() }}
-     <script src="{{ asset('bundles/system/js/angular.js') }}" type="text/javascript"></script> 
-     <script src="{{ asset('bundles/system/js/angular-strap.min.js') }}" type="text/javascript"></script> 
-     
-  {% endblock %} 
-{% endblock %}
 {% block title 'Login' %}
 {% block body %}
-    
-
+   
     <div class="sf-reset holder">
-        <div class="block" style="width: 300px; background-color: #ddd; border: none;">
+        <div class="block">
             <form action="{{ path('login_check') }}" method="post">
                 <label for="username">User:</label>
                 <input id="username" type="text" name="_username" class="block input_block" />
@@ -26,7 +15,7 @@
             </form>
             {% if error  %} 
      
-                <p style="font-weight: bold; text-align: center; font-size: 11px; margin-top: 10px;">{{error.message}}</p>
+                <p class="message">{{error.message}}</p>
             {% endif %}
         </div>
     </div>
