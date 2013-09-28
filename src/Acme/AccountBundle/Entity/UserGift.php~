@@ -38,7 +38,10 @@ class UserGift
     private $received_by;
     
     
-    
+    /**
+     * @ORM\Column(type="string", length=1)
+     */
+    private $new = 1;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
@@ -213,5 +216,28 @@ class UserGift
     public function getReceivedBy()
     {
         return $this->received_by;
+    }
+
+    /**
+     * Set sent_date
+     *
+     * @param \DateTime $sentDate
+     * @return UserGift
+     */
+    public function setSentDate($sentDate)
+    {
+        $this->sent_date = $sentDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get sent_date
+     *
+     * @return \DateTime 
+     */
+    public function getSentDate()
+    {
+        return $this->sent_date;
     }
 }
