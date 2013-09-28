@@ -13,6 +13,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Facebook;
 use Symfony\Component\HttpFoundation\Session\Session;
+
+
+
+
+
+
+
 class AccountController extends Controller
 {
     
@@ -265,25 +272,18 @@ class AccountController extends Controller
         $session = new Session();
         
         $app_id = $this->container->getParameter('facebook.credentials.app_id'); 
-        //$api_key = $this->container->getParameter('facebook.credentials.api_key'); 
         $app_secret = $this->container->getParameter('facebook.credentials.app_secret'); 
         
-        //Facebook::$CURL_OPTS[CURLOPT_SSL_VERIFYHOST] = 0; 
-        //Facebook::$CURL_OPTS[CURLOPT_SSL_VERIFYPEER] = 0; 
-        //Facebook::$CURL_OPTS[CURLOPT_SSL_VERIFYHOST] = 0; 
-        //Facebook::$CURL_OPTS[CURLOPT_SSL_VERIFYPEER] = 0;
         
         
         $facebook = new Facebook( array( 'appId' => $app_id, 'secret' => $app_secret, 'cookie' => false, )); 
-        //$session = $facebook->getSession(); 
-        //var_dump($facebook);
         
         
         if($facebook->getUser()){
             $me = $facebook->api('/me');
             
             
-            //var_dump($me);
+            var_dump($me);
             
                 
                 
@@ -293,21 +293,24 @@ class AccountController extends Controller
                 
                 
                 if($user){
+                    //die("ima");
+                    
+                    $request = $this->getRequest();
+                    $session = $request->getSession();
+                    $session->set("user", $user);
+                    
                     
                 }
                 else{
-                    //
-                    //$session->set('reg_email', $email);
-                    //$session->set('reg_first_name', $me['first_name']);
-                    //$session->set('reg_last_name', $me['last_name']);
-                    //$_SESSION['reg_email'] = $email;
+                    
+                    $_SESSION['reg_email'] = $email;
                     $_SESSION['reg_first_name'] = $me['first_name'];
                     $_SESSION['reg_last_name'] = $me['last_name'];
                     return $this->redirect("/register");
                 }
         }
         else{
-            $loginUrl = $facebook->getLoginUrl();
+            $loginUrl = $facebook->getLoginUrl(array('scope' => 'email,publish_stream,status_update,offline_access'));
             
             //echo $loginUrl;
             

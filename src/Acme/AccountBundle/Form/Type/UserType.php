@@ -13,6 +13,9 @@ class UserType extends AbstractType
         
         
         
+        if($_SESSION['reg_email']){
+            $email = $_SESSION['reg_email'];
+        }
         if($_SESSION['reg_first_name']){
             $fname = $_SESSION['reg_first_name'];
         }
@@ -39,6 +42,7 @@ class UserType extends AbstractType
         );
         $builder->add('username', 'email', array( 
             'attr'   =>  array(
+                'value'=> $email,
                 'class'   => 'block input_block',
                 'placeholder'=>"Your email"
                 ), 'label' => false,
