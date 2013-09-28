@@ -11,7 +11,8 @@ use Acme\AccountBundle\Form\Type\LoginType;
 use Acme\AccountBundle\Form\Model\Login;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
-
+use Facebook;
+use Symfony\Component\HttpFoundation\Session\Session;
 class AccountController extends Controller
 {
     
@@ -19,7 +20,9 @@ class AccountController extends Controller
         
         //var_dump($this->getUser()->getEmail()); 
         
-        //if( $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+        if( !$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirect("/");
+        }
             //return $this->render(
             //'AcmeAccountBundle::home.html.twig',
               //  array('user' => $this->getUser(), 'message'=>false)
@@ -142,7 +145,9 @@ class AccountController extends Controller
     public function loginAction(Request $request){
         
         
-        
+        if( $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirect("/home");
+        }
         
         
         $request = $this->getRequest();
@@ -249,8 +254,69 @@ class AccountController extends Controller
     public function logoutAction(Request $request){
         $session = $request->getSession();
         $session->clear();
-        
+        return $this->redirect("/login");
        
+    }
+    
+    
+    public function facebookLoginAction(Request $request){
+        
+        
+        $session = new Session();
+        
+        $app_id = $this->container->getParameter('facebook.credentials.app_id'); 
+        //$api_key = $this->container->getParameter('facebook.credentials.api_key'); 
+        $app_secret = $this->container->getParameter('facebook.credentials.app_secret'); 
+        
+        //Facebook::$CURL_OPTS[CURLOPT_SSL_VERIFYHOST] = 0; 
+        //Facebook::$CURL_OPTS[CURLOPT_SSL_VERIFYPEER] = 0; 
+        //Facebook::$CURL_OPTS[CURLOPT_SSL_VERIFYHOST] = 0; 
+        //Facebook::$CURL_OPTS[CURLOPT_SSL_VERIFYPEER] = 0;
+        
+        
+        $facebook = new Facebook( array( 'appId' => $app_id, 'secret' => $app_secret, 'cookie' => false, )); 
+        //$session = $facebook->getSession(); 
+        //var_dump($facebook);
+        
+        
+        if($facebook->getUser()){
+            $me = $facebook->api('/me');
+            
+            
+            //var_dump($me);
+            
+                
+                
+                $em = $this->getDoctrine()->getManager();
+                
+                $user = $em->getRepository("Acme\AccountBundle\Entity\User")->findOneBy(array("username"=>$me['email']));
+                
+                
+                if($user){
+                    
+                }
+                else{
+                    //
+                    //$session->set('reg_email', $email);
+                    //$session->set('reg_first_name', $me['first_name']);
+                    //$session->set('reg_last_name', $me['last_name']);
+                    //$_SESSION['reg_email'] = $email;
+                    $_SESSION['reg_first_name'] = $me['first_name'];
+                    $_SESSION['reg_last_name'] = $me['last_name'];
+                    return $this->redirect("/register");
+                }
+        }
+        else{
+            $loginUrl = $facebook->getLoginUrl();
+            
+            //echo $loginUrl;
+            
+            return $this->redirect($loginUrl);
+        }
+        return $this->render(
+                    'AcmeAccountBundle::login.html.twig',
+                    array('error'=>"", 'message'=>"", )
+                );
     }
 }
 ?>

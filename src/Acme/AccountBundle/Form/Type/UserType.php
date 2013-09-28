@@ -10,8 +10,18 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        
+        
+        
+        if($_SESSION['reg_first_name']){
+            $fname = $_SESSION['reg_first_name'];
+        }
+        if($_SESSION['reg_last_name']){
+            $lname = $_SESSION['reg_last_name'];
+        }
         $builder->add('first_name', 'text', array( 
             'attr'   =>  array(
+                'value'=>$fname,
                 'class'   => 'block input_block',
                 'placeholder'=>"First name"
                 ), 'label' => false,
@@ -20,6 +30,7 @@ class UserType extends AbstractType
         );
         $builder->add('last_name', 'text', array( 
             'attr'   =>  array(
+                'value'=>$lname,
                 'class'   => 'block input_block',
                 'placeholder'=>"Last name"
                 ), 'label' => false,

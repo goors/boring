@@ -10,32 +10,24 @@
      
   {% endblock %} 
 {% endblock %}
-
-
-
-{% block title 'Register' %}
-
+{% block title 'Login' %}
 {% block body %}
     
 
     <div class="sf-reset holder">
         <div class="block" style="width: 300px; background-color: #ddd; border: none;">
-
-            
-            
-            
             <form action="{{ path('login_check') }}" method="post">
-    <label for="username">User:</label>
-    <input id="username" type="text" name="_username" class="block input_block" />
-    <label for="password">Password:</label>
-    <input id="password" type="password" name="_password" class="block input_block" /> <input type="submit" name="login" class="block input_block button" />
-</form>
+                <label for="username">User:</label>
+                <input id="username" type="text" name="_username" class="block input_block" />
+                <label for="password">Password:</label>
+                <input id="password" type="password" name="_password" class="block input_block" /> 
+                <input type="submit" name="login" class="block input_block button" value="Login to gift app" />
+                <a href="/facebook-login">Login with facebook</a>
+            </form>
             {% if error  %} 
      
                 <p style="font-weight: bold; text-align: center; font-size: 11px; margin-top: 10px;">{{error.message}}</p>
             {% endif %}
-                
-                
         </div>
     </div>
     

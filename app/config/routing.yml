@@ -19,3 +19,7 @@ logout:
 account_home:
    pattern:  /home
    defaults: { _controller: AcmeAccountBundle:Account:index }
+   
+facebook_login:
+    pattern: /facebook-login
+    defaults: { _controller: AcmeAccountBundle:Account:facebooklogin }   
