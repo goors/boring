@@ -36,6 +36,9 @@ security:
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/home, roles: ROLE_USER }
+        - { path: ^/stats/.*, roles: ROLE_USER }
+        - { path: ^/sendgift/.*, roles: ROLE_USER }
+        - { path: ^/accountedit, roles: ROLE_USER }
         - { path: /admin, roles: ROLE_ADMIN }
         - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     

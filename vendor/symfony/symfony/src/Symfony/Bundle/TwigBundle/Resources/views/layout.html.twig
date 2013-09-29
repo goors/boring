@@ -45,8 +45,11 @@
                     </div>
                     <div class="menu">
                         {% if app.user %}
-                        <div class="circle">    
-                        <a href="/logout">Logout</a>  
+                        <div class="circle" style="float: right;">    
+                            <a href="/logout">Logout</a>  
+                        </div>
+                        <div class="circle" style="float: right; margin-right: 10px;">    
+                            <a href="/accountedit">Account</a>  
                         </div>
                         {% else %}
                         <a href="/register">Register</a> / 

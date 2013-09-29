@@ -169,6 +169,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return $this->mergeDefaults(array_replace($matches, array('_route' => 'mark_read')), array (  '_controller' => 'Acme\\AccountBundle\\Controller\\GiftController::markasreadAction',));
         }
 
+        // account_edit
+        if ($pathinfo === '/accountedit') {
+            return array (  '_controller' => 'Acme\\AccountBundle\\Controller\\AccountController::accounteditAction',  '_route' => 'account_edit',);
+        }
+
         if (0 === strpos($pathinfo, '/log')) {
             if (0 === strpos($pathinfo, '/login')) {
                 // login

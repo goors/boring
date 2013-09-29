@@ -1,0 +1,27 @@
+{% extends "TwigBundle::layout.html.twig" %}
+
+
+{% block head %}
+    {% block javascripts %} 
+    {{ parent() }}
+  {% endblock %} 
+{% endblock %}
+
+
+
+{% block title 'Register' %}
+
+{% block body %}
+    
+
+    <div class="sf-reset holder">
+        <div class="block register_form" >
+
+            {{form(form)}}
+            {% if message  %} 
+                <p class="message">{{message}}</p>
+            {% endif %}
+        </div>
+    </div>
+    
+{% endblock %}

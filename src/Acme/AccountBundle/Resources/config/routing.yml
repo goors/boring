@@ -18,6 +18,9 @@ user_stats:
 mark_read:
    pattern:  /markasread/{giftid}
    defaults: { _controller: AcmeAccountBundle:Gift:markasread }
-   
+account_edit:
+  
+   pattern:  /accountedit
+   defaults: { _controller: AcmeAccountBundle:Account:accountedit }
    
    

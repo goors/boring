@@ -6,7 +6,9 @@ namespace Acme\AccountBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use Acme\AccountBundle\Form\Type\RegistrationType;
+use Acme\AccountBundle\Form\Type\AccountType;
 use Acme\AccountBundle\Form\Model\Registration;
+use Acme\AccountBundle\Form\Model\Account;
 use Acme\AccountBundle\Form\Type\LoginType;
 use Acme\AccountBundle\Form\Model\Login;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -22,6 +24,10 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class AccountController extends Controller
 {
     
+    
+    
+
+
     public function indexAction(Request $request){
         
         if( !$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
@@ -254,6 +260,85 @@ class AccountController extends Controller
                     'AcmeAccountBundle::login.html.twig',
                     array('error'=>"", 'message'=>"", )
                 );
+    }
+    
+    
+    
+    public function accountEditAction(Request $request){
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        $user = $em->getRepository("Acme\AccountBundle\Entity\User")->find($this->getUser()->getId());
+        
+        $form = $this->createForm(new AccountType(), $user, array(
+            'action' => $this->generateUrl('account_edit'),
+        ));
+        
+        
+        
+        /*
+         * get new gifts
+         */
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            "SELECT COUNT(p.id)
+            FROM AcmeAccountBundle:UserGift p WHERE p.new='1' AND p.received_by='".$this->getUser()->getId()."'
+            "
+        );
+        
+        $new_count = $query->getSingleScalarResult();
+        
+        $request = $this->getRequest();
+        
+        if ( $request->getMethod() == 'POST' ) {
+            
+            $form->bind( $request );
+            
+            if ( $form->isValid() ) {
+                
+                $params = $this->getRequest()->request->all();
+                print_r($params);
+                
+                $factory = $this->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($user->getUser());
+                $password = $encoder->encodePassword($params["account"]["user"]["password"], $user->getSalt());
+                $user->setPassword($password);
+                
+                
+                $em->persist( $user );
+                $em->flush();
+                
+                
+                
+                
+                return $this->render(
+                'AcmeAccountBundle::account.html.twig',
+                    array(
+                           'form' => $form->createView(), 
+                           'message'=>"Your account was updated.", 
+                           'new_count'=>$new_count 
+                         )
+                );
+            }
+        }
+        
+        
+        
+
+        
+        
+        
+        return $this->render(
+            'AcmeAccountBundle::account.html.twig',
+                array(
+                       'form' => $form->createView(), 
+                       'message'=>false, 
+                       'new_count'=>$new_count 
+                     )
+            );
+        
+        
+        
     }
 }
 ?>

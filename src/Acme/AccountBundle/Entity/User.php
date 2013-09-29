@@ -275,4 +275,8 @@ class User implements AdvancedUserInterface, \Serializable
             $this->id,
         ) = unserialize($serialized);
     }
+    
+    public function getUser(){
+        return $this;
+    }
 }
