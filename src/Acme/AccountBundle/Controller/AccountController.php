@@ -297,7 +297,7 @@ class AccountController extends Controller
             if ( $form->isValid() ) {
                 
                 $params = $this->getRequest()->request->all();
-                print_r($params);
+                //print_r($params);
                 
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($user->getUser());
@@ -309,7 +309,17 @@ class AccountController extends Controller
                 $em->flush();
                 
                 
-                
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('Gift App password change')
+                    ->setFrom('changepassword@pregmatch.org')
+                    ->setTo($user->getUsername())
+                    ->setBody(
+
+                        "Hello, ".$user->getFirstName().". <br /><br />
+                            your new password for gift app is: ".$params["account"]["user"]["password"], 'text/html'    
+                    )
+                ;
+                $this->get('mailer')->send($message);
                 
                 return $this->render(
                 'AcmeAccountBundle::account.html.twig',
